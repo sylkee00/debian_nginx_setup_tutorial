@@ -49,12 +49,6 @@ cp -r .ssh/home/lsy42
 chown -R lsy42:lsy42 /home/lsy42/.ssh
 ```
 
-OR
-
-```bash
-rsync --archive --chown=lsy42:lsy42 ~/.ssh /home/lsy42
-```
-
 
 ## Step 5: Disabling SSH Root Login
 
