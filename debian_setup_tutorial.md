@@ -18,14 +18,11 @@ ssh root@your_server_ip
 
 ## Step 2: Creating a New User
 
-Create a new user, Let's say the name of the new user is 'lsy42'.
+Create a new user, Let's say the name of the new user is 'lsy42'. 
+Ensure that bash is the default shell (Setting bash as the log in shell) for the new user using ***-ms /bin/bash lsy42***.
 
 ```bash
 adduser -ms /bin/bash lsy42
-```
-or 
-```bash
-adduser lsy42
 ```
 
 Set and confirm the new user's password at the prompt.
@@ -43,14 +40,7 @@ Give your new user sudo privileges to perform administrative tasks.
 usermod -aG sudo lsy42
 ```
 
-## Step 4: Setting Bash as the Login Shell - step 2 overlapped?
-
-Ensure that bash is the default shell for the new user.
-
-```bash
-chsh -s /bin/bash lsy42
-```
-## Step 5: Enabling SSH Access for the New User
+## Step 4: Enabling SSH Access for the New User
 
 Copy the SSH keys from the root user to the new user's account
 
@@ -65,7 +55,7 @@ or with Step 6,
 rsync --archive --chown=exampleuser:exampleuser ~/.ssh /home/exampleuser
 ```
 
-## Step 6: Disabling SSH Root Login
+## Step 5: Disabling SSH Root Login
 
 Edit the SSH configuration file with a text editor like vim.
 
@@ -79,7 +69,7 @@ Find the line that says **'PermitRootLogin yes'** and change it to **'PermitRoot
 systemctl restart sshd
 ```
 
-## Step 7: Installing Nginx
+## Step 6: Installing Nginx
 
 Update your package lists and install Nginx.
 
@@ -88,7 +78,7 @@ sudo apt update
 sudo apt install nginx
 ```
 
-## Step 8: Configuring Nginx to Serve a Sample Website
+## Step 7: Configuring Nginx to Serve a Sample Website
 
 Create a directory for your website.
 
