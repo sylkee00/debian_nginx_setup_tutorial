@@ -19,7 +19,7 @@ ssh root@your_server_ip
 ## Step 2: Creating a New User
 
 Create a new user, Let's say the name of the new user is 'lsy42'. 
-Ensure that bash is the default shell (Setting bash as the log in shell) for the new user using ***-ms /bin/bash lsy42***.
+Ensure that bash is the default shell (Setting bash as the log in shell) for the new user using *-ms /bin/bash*.
 
 ```bash
 adduser -ms /bin/bash lsy42
@@ -49,11 +49,12 @@ cp -r .ssh/home/lsy42
 chown -R lsy42:lsy42 /home/lsy42/.ssh
 ```
 
-or with Step 6,
+OR
 
 ```bash
-rsync --archive --chown=exampleuser:exampleuser ~/.ssh /home/exampleuser
+rsync --archive --chown=lsy42:lsy42 ~/.ssh /home/lsy42
 ```
+
 
 ## Step 5: Disabling SSH Root Login
 
@@ -80,7 +81,7 @@ sudo apt install nginx
 
 ## Step 7: Configuring Nginx to Serve a Sample Website
 
-Create a directory for your website.
+Create a directory for your website. Let's say your website name is 'my-site'
 
 ```bash
 sudo mkdir -p /var/www/my-site
@@ -89,7 +90,7 @@ sudo mkdir -p /var/www/my-site
 Assign ownership of the directory to your user.
 
 ```bash
-sudo chown -R lsy42:lsy42 /var/www/mywebsite
+sudo chown -R lsy42:lsy42 /var/www/my-site
 ```
 
 Create a sample **'index.html'** file in that directory.
