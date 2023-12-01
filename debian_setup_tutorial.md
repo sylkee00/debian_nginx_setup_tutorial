@@ -9,14 +9,33 @@ This tutorial will guide you through setting up a new Debian 12 server on Digita
 - A DigitalOcean account
 - A fresh Debian 12 server instance
 
-## Step 1: Accessing Your Server
+## Step 1: Create a Debian 12 Server on DigitalOcean
 
-Access your server ussing SSH as the root user. Replace 'your_server_ip' with your server's IP address.
+1. Log in to your DigitalOcean account.
+
+2. Click on the "Create Droplet" button.
+
+3. Choose the following options:
+   - Distribution: Debian 12 (Choose the latest available version)
+   - Plan: Choose your preferred plan.
+   - Data Center Region: Select a data center region closest to your target audience.
+   - Authentication: Choose "SSH Key" and add your SSH public key if you have one, or you can use a password for now.
+
+4. Click on the "Create Droplet" button.
+
+5. Wait for the server to be created. DigitalOcean will provide you with the server's IP address.
+
+## Step 2: Connect to Your Server via SSH
+
+Open your terminal and use SSH to connect to your server. Replace `your_ip_address` with your server's actual IP address. This will allow you to access your server as the root user.
+
+
 ```bash
-ssh root@your_server_ip
+ssh root@your_ip_address
 ```
 
-## Step 2: Creating a New User
+
+## Step 3: Creating a New User
 
 Create a new user, Let's say the name of the new user is 'lsy42'. 
 Ensure that bash is the default shell (Setting bash as the log in shell) for the new user using *-ms /bin/bash*.
@@ -31,16 +50,17 @@ Set and confirm the new user's password at the prompt.
 passwd lsy42
 ```
 
-## Step 3: Granting Administrative Privileges
+## Step 4: Granting Administrative Privileges
 
-If password is updated successfully,
+If password is updated successfully, we will add the new user to the sudo group to grant administrative privileges.
+
 Give your new user sudo privileges to perform administrative tasks.
 
 ```bash
 usermod -aG sudo lsy42
 ```
 
-## Step 4: Enabling SSH Access for the New User
+## Step 5: Enabling SSH Access for the New User
 
 Copy the SSH keys from the root user to the new user's account
 
@@ -50,21 +70,21 @@ chown -R lsy42:lsy42 /home/lsy42/.ssh
 ```
 
 
-## Step 5: Disabling SSH Root Login
+## Step 6: Configure SSH - Disabling SSH Root Login
 
 Edit the SSH configuration file with a text editor like vim.
 
 ```bash
-vim /etc/ssh/sshd_config
+sudo vim /etc/ssh/sshd_config
 ```
 
 Find the line that says **'PermitRootLogin yes'** and change it to **'PermitRootLogin no'**. Save and close the file. Restart the SSH service to apply the changes.
 
 ```bash
-systemctl restart sshd
+sudo systemctl restart sshd
 ```
 
-## Step 6: Installing Nginx
+## Step 7: Installing Nginx
 
 Update your package lists and install Nginx.
 
@@ -73,7 +93,7 @@ sudo apt update
 sudo apt install nginx
 ```
 
-## Step 7: Configuring Nginx to Serve a Sample Website
+## Step 8: Configuring Nginx to Serve a Sample Website
 
 Create a directory for your website. Let's say your website name is 'my-site'
 
@@ -88,10 +108,13 @@ sudo chown -R lsy42:lsy42 /var/www/my-site
 ```
 
 Create a sample **'index.html'** file in that directory.
+Save the file and exit the text editor.
 
 ```bash
 sudo vim index.html
 ```
+
+Configure Nginx to serve your sample website by creating a new virtual host configuration file:
 
 Create a new Nginx server block configuration file.
 
@@ -114,6 +137,7 @@ server {
     }
 }
 ```
+
 Enable the file by creating a symbolic link to the **sites-enabled** directory.
 
 ```bash
@@ -132,6 +156,12 @@ Restart Nginx to apply the changes.
 sudo systemctl restart nginx
 ```
 
+## Step 9: Access Your Sample Website
+
+Open a web browser and enter your server's IP address or domain name. You should see your sample website served by Nginx.
+
+
 ## Conclusion
-You now have a Debian 12 server running Nginx, serving a simple web page, and a secure user for SSH access.
+
+Congratulations! You have successfully set up a Debian 12 server on DigitalOcean, created a new regular user with administrative privileges, prevented the root user from SSH access, installed Nginx, and configured it to serve a sample website.
 
